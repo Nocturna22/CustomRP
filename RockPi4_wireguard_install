@@ -1,7 +1,19 @@
+#!/bin/bash
+
+read -p "Install Wireguard etc? yes/No " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1 # handle exits from shell or function but don't exit interactive shell
+fi
+
+
 show_temp(){
 tz0=$(</sys/class/thermal/thermal_zone0/temp)
 tz1=$(</sys/class/thermal/thermal_zone1/temp)
-echo -e "Temperature now is: \e[100m$((tz0/1000))°C $((tz1/1000))°C\e[49m"
+echo ""
+echo -e "\e[100m$((tz0/1000))°C $((tz1/1000))°C\e[49m <----------  Temperature"
+echo ""
 }
 
 echo $(show_temp)
