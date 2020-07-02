@@ -8,4 +8,4 @@ curl -O https://raw.githubusercontent.com/twerpyfie/Install-Wireguard-On-RockPi4
 
 chmod +x RockPi4_wireguard_install.sh
 
-sudo ./RockPi4_wireguard_install.sh
+sudo bash ./RockPi4_wireguard_install.sh
