@@ -1,47 +1,92 @@
 #!/bin/bash
 
-read -p " Do you want to install Wireguard + Kernelheaders? yes/No " -n 1 -r
-echo
-if [[ ! $REPLY =~ ^[Yy]$ ]]
-then
-    [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1 
-fi
+################### VARIABLES ######################
+USER=$(whoami)
+KERNELVERSION=$(uname -r)
+#xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-show_temp(){
-tz0=$(</sys/class/thermal/thermal_zone0/temp)
-tz1=$(</sys/class/thermal/thermal_zone1/temp)
-echo ""
-echo -e "\e[100m $((tz0/1000))°C $((tz1/1000))°C <---------- Temperature\e[49m"
-echo ""
-}
+clear
+	echo -e "\e[38;5;4m                        |                              _ \                   |       _ \   _)   |  |"
+	echo -e "\e[38;5;25m   __|   |   |    __|   __|    _ \    __ '__ \        |   |    _ \     __|   |  /   |   |   |   |  |"
+	echo -e "\e[38;5;55m  (      |   |  \__ \   |     (   |   |   |   |       __ <    (   |   (        <    ___/    |  ___ __|"
+	echo -e "\e[38;5;57m \___|  \__,_|  ____/  \__|  \___/   _|  _|  _|      _| \_\  \___/   \___|  _|\_\  _|      _|     _|"
+sleep 1
+	echo -e " The current User is: " "$USER" "\e[0m"
+sleep 1
+	echo
 
-echo $(show_temp)
-echo -e "\e[100m Updating packages now.\e[49m"
-apt-get -y update
-echo $(show_temp)
-echo -e "\e[100m Upgrading packages now.\e[49m"
-apt-get -y upgrade
-echo $(show_temp)
 
-echo -e "\e[100m Checking for kernel compatibility...\e[49m"
-version=$(uname -r)
-if [[ "${version}" == *"rockchip64"* ]]; then
-echo -e "\e[100m Kernel headers are fitting, let's move on and install them.\e[49m"
-apt-get -y install linux-headers-current-rockchip64
-echo $(show_temp)
-echo -e "\e[100m Installing some lib's.\e[49m"
-apt-get -y install libmnl-dev libelf-dev build-essential pkg-config
-echo $(show_temp)
-echo -e "\e[100m Finally installing Wireguard.\e[49m"
-apt-get -y install wireguard
-echo -e "\e[100m Okay, I'm done with my work.\e[49m"
-echo -e "\e[100m Have a nice day! :]\e[49m"
-echo ""
+
+
+########## Install custom bashpromt?
+while true
+do
+	echo -e "\e[48;5;57m Do you want to customize your bashpromt?\e[48;5;235m[Y/n]\e[0m"
+	echo -e " The colors are like the colors in the custom RockPi4 banner above."
+	read -r -p  " The temperature is also displayed in the promt." input
+ case $input in
+     [yY][eE][sS]|[yY])
+	echo -e "\e[0m Installing..."
+	cat ./files/bashrc_payload >> $HOME/.bashrc  
+	echo -e " The changes are visible after a reboot. Or after this command: \e[48;5;57msource ~/.bashrc\e[0m"
+	echo 
+ break
+	;;
+     [nN][oO]|[nN])
+echo " Not installed..."
+	break
+    ;;
+     *)
+	echo " Invalid input..."
+	;;
+ esac
+done
+#xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+
+########## Install Wireguard?
+while true
+do
+	echo -e "\e[48;5;57m Do you want to install Wireguard VPN?\e[48;5;235m[Y/n]\e[0m"
+	echo -e " RockPi4 Kernelheaders will be installed."
+	read -r -p  " Wireguard dependencies will be installed." input
+	case $input in
+     [yY][eE][sS]|[yY])
+	echo -e "\e[48;5;57m Updating packages now.\e[0m"
+	apt-get -y update
+	echo -e "\e[48;5;57m Upgrading packages now.\e[0m"
+	apt-get -y upgrade
+	echo -e "\e[48;5;57m Checking for kernel compatibility...\e[0m"
+if [[ "${KERNELVERSION}" == *"rockchip64"* ]]; then ####### Compare Kernel wirh KernelHeaders
+	echo -e "\e[48;5;57m The kernel headers match the installed kernel.\e[0m"
+	apt-get -y install linux-headers-current-rockchip64
+	echo -e "\e[48;5;57m Installing some lib's.\e[0m"
+	apt-get -y install libmnl-dev libelf-dev build-essential pkg-config
+	echo -e "\e[48;5;57m Finally installing Wireguard.\e[0m"
+	apt-get -y install wireguard
 else
-echo -e "\e[101m Something went wrong with the Kernel-headers! Please check it.                   \e[49m"
-echo -e "\e[101m Your installed Kernel is ${version} but this installer is for the Rockchip64 one           \e[49m"
-echo -e "\e[101m This script was made 02.07.2020. If you have an RockPi4 and this does not work-  \e[49m"
-echo -e "\e[101m maby this installer is to old..                                                  \e[49m"
-
-echo $(show_temp)
+	echo -e "\e[48;5;160m Something went wrong with the Kernel-headers! Please check it.                   \e[0m"
+	echo -e "\e[48;5;160m Your installed Kernel is ${KERNELVERSION} but this installer is for the Rockchip64        \e[0m"
+	echo -e "\e[48;5;160m This script was made 02.07.2020. If you have an RockPi4 and this does not work-  \e[0m"
+	echo -e "\e[48;5;160m maby this installer is to old..                                                  \e[0m"
 fi
+ break
+	;;
+     [nN][oO]|[nN])
+echo " Not installed..."
+ break
+    ;;
+     *)
+ echo " Invalid input..."
+	;;
+ esac
+done
+#xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+
+################### FUNCTIONS ######################
+#xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
