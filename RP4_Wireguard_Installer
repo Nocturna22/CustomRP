@@ -1,0 +1,47 @@
+#!/bin/bash
+
+read -p " Do you want to install Wireguard + Kernelheaders? yes/No " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1 
+fi
+
+show_temp(){
+tz0=$(</sys/class/thermal/thermal_zone0/temp)
+tz1=$(</sys/class/thermal/thermal_zone1/temp)
+echo ""
+echo -e "\e[100m $((tz0/1000))°C $((tz1/1000))°C <---------- Temperature\e[49m"
+echo ""
+}
+
+echo $(show_temp)
+echo -e "\e[100m Updating packages now.\e[49m"
+apt-get -y update
+echo $(show_temp)
+echo -e "\e[100m Upgrading packages now.\e[49m"
+apt-get -y upgrade
+echo $(show_temp)
+
+echo -e "\e[100m Checking for kernel compatibility...\e[49m"
+version=$(uname -r)
+if [[ "${version}" == *"rockchip64"* ]]; then
+echo -e "\e[100m Kernel headers are fitting, let's move on and install them.\e[49m"
+apt-get -y install linux-headers-current-rockchip64
+echo $(show_temp)
+echo -e "\e[100m Installing some lib's.\e[49m"
+apt-get -y install libmnl-dev libelf-dev build-essential pkg-config
+echo $(show_temp)
+echo -e "\e[100m Finally installing Wireguard.\e[49m"
+apt-get -y install wireguard
+echo -e "\e[100m Okay, I'm done with my work.\e[49m"
+echo -e "\e[100m Have a nice day! :]\e[49m"
+echo ""
+else
+echo -e "\e[101m Something went wrong with the Kernel-headers! Please check it.                   \e[49m"
+echo -e "\e[101m Your installed Kernel is ${version} but this installer is for the Rockchip64 one           \e[49m"
+echo -e "\e[101m This script was made 02.07.2020. If you have an RockPi4 and this does not work-  \e[49m"
+echo -e "\e[101m maby this installer is to old..                                                  \e[49m"
+
+echo $(show_temp)
+fi
