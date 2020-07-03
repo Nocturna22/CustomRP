@@ -22,6 +22,6 @@ Example:
 ```bash
 $ git clone https://github.com/twerpyfie/Custom-RockPi-setup.git
 $ cd Custom-RockPi-setup
-$ chmod +x rp4-wg-installer
+$ chmod +x ./Setup
 $ bash ./Setup
 ```
