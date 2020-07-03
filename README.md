@@ -32,3 +32,4 @@ $ bash ./Setup
 - Include wireguard QR-Code generator for Peers
 - Include Pihole installation
 - Maby make some new Repositorys for the other Projects included
+- Maby make for every underproject an single file that will be executed
