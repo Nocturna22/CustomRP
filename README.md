@@ -33,3 +33,4 @@ $ bash ./Setup
 - Include Pihole installation
 - Maby make some new Repositorys for the other Projects included
 - Maby make for every underproject an single file that will be executed
+- Maby make an updater
