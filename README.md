@@ -5,5 +5,7 @@ A script, used to install the kernelheaders for the RockPi4, dependencies and, o
 **Usage:**
 
 ```
-sudo curl -sSL https://raw.githubusercontent.com/twerpyfie/Install-Wireguard-On-RockPi4/master/RP4_Wireguard_Installer | bash
+sudo curl -O https://raw.githubusercontent.com/twerpyfie/RP4-Wireguard-installer/master/rp4-wg-installer
+chmod +x rp4-wg-installer
+bash ./rp4-wg-installer
 ```
