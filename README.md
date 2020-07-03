@@ -6,29 +6,17 @@ With this simple setup it is possible to customize a new installation of DietPi 
 What is possible so far:
 Wireguard installation on a RockPi with DietPi
 
+Change the Bashpromt:
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-A script, used to install the kernelheaders for the RockPi4, dependencies and, of course, Wireguard.
 
 **Usage:**
 
 ```
-sudo curl -O https://raw.githubusercontent.com/twerpyfie/RP4-Wireguard-installer/master/rp4-wg-installer
+git clone https://github.com/twerpyfie/Custom-RockPi-setup.git
+cd Custom-RockPi-setup
 chmod +x rp4-wg-installer
-bash ./rp4-wg-installer
+bash ./Setup
 ```
