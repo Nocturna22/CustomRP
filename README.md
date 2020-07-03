@@ -25,3 +25,10 @@ $ cd Custom-RockPi-setup
 $ chmod +x ./Setup
 $ bash ./Setup
 ```
+
+### To do:
+
+- Include wireguard configurator
+- Include wireguard QR-Code generator for Peers
+- Include Pihole installation
+- Maby make some new Repositorys for the other Projects included
