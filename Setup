@@ -1,4 +1,4 @@
-
+#!/bin/bash
 
 ################### VARIABLES ######################
 USER=$(whoami)
@@ -15,7 +15,6 @@ sleep 1
 	echo
 
 sudo chmod +x ./scripts/1_install_wireguard
-sudo chmod +x ./scripts/2_Install_MOTD
 
 
 ########## Install custom bashpromt?
@@ -29,31 +28,6 @@ do
 	echo -e "\e[0m Installing..."
 	sudo cat ./files/bashrc_payload >> $HOME/.bashrc
 	echo -e " The changes are visible after a reboot. Or after this command: \e[48;5;57msource ~/.bashrc\e[0m"
-	echo
- break
-	;;
-     [nN][oO]|[nN])
-echo " Not installed..."
-	break
-    ;;
-     *)
-	echo " Invalid input..."
-	;;
- esac
-done
-#xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-
-########## Install custom MOTD?
-while true
-do
-	echo -e "\e[48;5;57m Do you want to customize your MOTD?\e[48;5;235m[Y/n]\e[0m"
-	echo " hfh "
-	read -r -p  " fdf" input
- case $input in
-     [yY][eE][sS]|[yY])
-	#sudo bash ./scripts/2_Install_MOTD
-	echo -e " I have not finished the MOTD, sorry.\e[0m"
 	echo
  break
 	;;
