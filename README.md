@@ -23,7 +23,7 @@ Example:
 $ git clone https://github.com/twerpyfie/Custom-RockPi-setup.git
 $ cd Custom-RockPi-setup
 $ chmod +x ./Setup
-$ bash ./Setup
+$ sudo bash ./Setup
 ```
 
 ### To do:
