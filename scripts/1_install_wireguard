@@ -1,0 +1,100 @@
+#!/bin/bash
+
+
+################### Variables ##############################
+KERNELVERSION=$(uname -r)
+
+
+Installed_Wireguard='none'
+Installed_KernelHeaders='none'
+Installed_Libs='none'
+################### /Variables #############################
+
+################### Install Wireguard ######################
+echo -e "\e[48;5;57m Updating packages now.\e[0m"
+        sudo apt-get -y update
+        echo -e "\e[48;5;57m Upgrading packages now.\e[0m"
+        sudo apt-get -y upgrade
+        echo -e "\e[48;5;57m Checking for kernel compatibility...\e[0m"
+if [[ "${KERNELVERSION}" == *"rockchip64"* ]]; then ####### Compare Kernel wirh KernelHeaders
+        echo -e "\e[48;5;57m The kernel headers match the installed kernel.\e[0m"
+        sudo apt-get -y install linux-headers-current-rockchip64
+        echo -e "\e[48;5;57m Installing some lib's.\e[0m"
+        sudo apt-get -y install libmnl-dev libelf-dev build-essential pkg-config
+        echo -e "\e[48;5;57m Finally installing Wireguard.\e[0m"
+        sudo apt-get -y install wireguard
+else
+        echo -e "\e[48;5;160m Something went wrong with the Kernel-headers! Please check it.                   \e[0m"
+        echo -e "\e[48;5;160m Your installed Kernel is ${KERNELVERSION} but this installer is for the Rockchip64        \e[0m"
+        echo -e "\e[48;5;160m This script was made 02.07.2020. If you have an RockPi4 and this does not work-  \e[0m"
+        echo -e "\e[48;5;160m maby this installer is to old..                                                  \e[0m"
+fi
+#################### /Install Wireguard #####################
+
+#################### Functions ##############################
+
+####### Check if wireguard is installed
+pkgs='wireguard'
+if ! dpkg -s $pkgs >/dev/null 2>&1; then
+ Installed_Wireguard='false'
+ else
+ Installed_Wireguard='true'
+ fi
+#######################################
+
+####### Check if wireguard is installed
+pkgs='linux-headers-current-rockchip64'
+if ! dpkg -s $pkgs >/dev/null 2>&1; then
+ Installed_KernelHeaders='false'
+ else
+ Installed_KernelHeaders='true'
+ fi
+#######################################
+
+####### Check if libs are installed
+pkgs='libmnl-dev'
+if ! dpkg -s $pkgs >/dev/null 2>&1; then
+ Installed_Libs='false'
+ else
+ Installed_Libs='true'
+ fi
+
+if $Installed_Libs = true; then
+pkgs='libelf-dev'
+if ! dpkg -s $pkgs >/dev/null 2>&1; then
+ Installed_Libs='false'
+ else
+ Installed_Libs='true'
+ fi
+fi
+
+if $Installed_Libs = true; then
+pkgs='build-essential'
+if ! dpkg -s $pkgs >/dev/null 2>&1; then
+ Installed_Libs='false'
+ else
+ Installed_Libs='true'
+ fi
+fi
+
+if $Installed_Libs = true; then
+pkgs='pkg-config'
+if ! dpkg -s $pkgs >/dev/null 2>&1; then
+ Installed_Libs='false'
+ else
+ Installed_Libs='true'
+ fi
+fi
+#######################################
+sudo sed "1s/.*/Installed_Wireguard=${Installed_Wireguard}/" ./files/variables > ./files/variables_temp #set Wireguard installed variable
+sudo cp ./files/variables_temp ./files/variables
+
+sudo sed "2s/.*/Installed_KernelHeaders=${Installed_KernelHeaders}/" ./files/variables > ./files/variables_temp #set Kernel-headers installed variable
+sudo cp ./files/variables_temp ./files/variables
+
+sudo sed "3s/.*/Installed_Libs=${Installed_Libs}/" ./files/variables > ./files/variables_temp #set libs installed variable
+sudo cp ./files/variables_temp ./files/variables
+
+sudo rm ./files/variables_temp
+
+############### /Functions ##################################
