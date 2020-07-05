@@ -7,6 +7,7 @@ With this simple setup it is possible to customize a new installation of DietPi 
 
 - Wireguard installation on a RockPi with DietPi
 - Change the Bashpromt
+- Change MOTD for DietPi
 
 
 
