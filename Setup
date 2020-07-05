@@ -15,6 +15,7 @@ sleep 1
 	echo
 
 sudo chmod +x ./scripts/1_install_wireguard
+sudo chmod +x ./scripts/2_Install_MOTD
 
 
 ########## Install custom bashpromt?
@@ -26,7 +27,7 @@ do
  case $input in
      [yY][eE][sS]|[yY])
 	echo -e "\e[0m Installing..."
-	sudo cat ./files/bashrc_payload >> $HOME/.bashrc
+	sudo cat ./files/2payload_bashrc >> $HOME/.bashrc
 	echo -e " The changes are visible after a reboot. Or after this command: \e[48;5;57msource ~/.bashrc\e[0m"
 	echo
  break
@@ -42,7 +43,27 @@ echo " Not installed..."
 done
 #xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
+########## Install custom MOTD?
+while true
+do
+	echo -e "\e[48;5;57m Do you want to install a custom Message of the Day?\e[48;5;235m[Y/n]\e[0m"
+	read -r -p  " Lolcat and figlet will be installed." input
+	case $input in
+     [yY][eE][sS]|[yY])
+	sudo bash ./scripts/2_Install_MOTD
 
+ break
+	;;
+     [nN][oO]|[nN])
+echo " Not installed..."
+ break
+    ;;
+     *)
+ echo " Invalid input..."
+	;;
+ esac
+done
+#xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ########## Install Wireguard?
 while true
@@ -66,6 +87,8 @@ echo " Not installed..."
  esac
 done
 #xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
 
 
 
