@@ -86,15 +86,15 @@ if ! dpkg -s $pkgs >/dev/null 2>&1; then
  fi
 fi
 #######################################
-sudo sed "1s/.*/Installed_Wireguard=${Installed_Wireguard}/" ./files/variables > ./files/variables_temp #set Wireguard installed variable
-sudo cp ./files/variables_temp ./files/variables
+sudo sed "1s/.*/Installed_Wireguard=${Installed_Wireguard}/" ./files/1global_variables > ./files/1global_variables_temp #set Wireguard installed variable
+sudo cp ./files/1global_variables_temp ./files/1global_variables
 
-sudo sed "2s/.*/Installed_KernelHeaders=${Installed_KernelHeaders}/" ./files/variables > ./files/variables_temp #set Kernel-headers installed variable
-sudo cp ./files/variables_temp ./files/variables
+sudo sed "2s/.*/Installed_KernelHeaders=${Installed_KernelHeaders}/" ./files/1global_variables > ./files/1global_variables_temp #set Kernel-headers installed variable
+sudo cp ./files/1global_variables_temp ./files/1global_variables
 
-sudo sed "3s/.*/Installed_Libs=${Installed_Libs}/" ./files/variables > ./files/variables_temp #set libs installed variable
-sudo cp ./files/variables_temp ./files/variables
+sudo sed "3s/.*/Installed_Libs=${Installed_Libs}/" ./files/1global_variables > ./files/1global_variables_temp #set libs installed variable
+sudo cp ./files/1global_variables_temp ./files/1global_variables
 
-sudo rm ./files/variables_temp
+sudo rm ./files/1global_variables_temp
 
 ############### /Functions ##################################

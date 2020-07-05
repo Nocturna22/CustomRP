@@ -1,3 +1,90 @@
 #!/bin/bash
-echo Last login: `last`
 
+
+################### Variables ##############################
+Installed_figlet='none'
+Installed_ruby='none'
+Installed_lolcat='none'
+################### /Variables #############################
+
+################### Install stuff for the MOTD ######################
+	echo -e "\e[48;5;57m Updating packages now.\e[0m"
+    sudo apt-get -y update
+    echo -e "\e[48;5;57m Upgrading packages now.\e[0m"
+    sudo apt-get -y upgrade
+	echo -e "\e[48;5;57m Installing Figlet...\e[0m"
+	sudo apt-get install figlet
+	echo -e "\e[48;5;57m Installing Ruby...\e[0m"
+	sudo apt-get install ruby
+	echo -e "\e[48;5;57m Downloading Lolcat...\e[0m"
+	sudo wget https://github.com/busyloop/lolcat/archive/master.zip -O ./temp/master.zip
+	echo -e "\e[48;5;57m Unzipping Lolcat...\e[0m"
+	(cd ./temp/ && sudo unzip -a ./master.zip)
+	echo -e "\e[48;5;57m Installing Lolcat...\e[0m"
+	(cd ./temp/lolcat-master/bin && sudo gem install lolcat)
+	echo -e "\e[48;5;57m Testing Figlet and Lolcat...\e[0m"
+	echo ""
+	sudo figlet "$(hostname)" | lolcat -f
+	echo -e "\e[48;5;57m Tidying up...\e[0m"
+	sudo rm -r ./temp/lolcat-master
+	sudo rm ./temp/master.zip
+#################### /Install stuff for the MOTD #####################
+
+
+
+#################### Install  MOTD #####################
+
+FILE=/boot/dietpi/func/dietpi-banner
+if test -f "$FILE"; then
+    sudo cp /boot/dietpi/func/dietpi-banner /boot/dietpi/func/BACKUP_dietpi-banner
+	cp ./files/2payload_MOTD /boot/dietpi/func/dietpi-banner
+else
+	echo "I can currently only change the MOTD from a dietpi installation. But this will change later."
+fi
+
+
+#################### /Install  MOTD ####################
+
+
+
+#################### Functions ##############################
+
+####### Check if figlet
+pkgs='figlet'
+if ! dpkg -s $pkgs >/dev/null 2>&1; then
+ Installed_Figlet='false'
+ else
+ Installed_Figlet='true'
+ fi
+#######################################
+
+####### Check if ruby
+pkgs='ruby'
+if ! dpkg -s $pkgs >/dev/null 2>&1; then
+ Installed_Ruby='false'
+ else
+ Installed_Ruby='true'
+ fi
+#######################################
+
+####### Check if lolcat
+pkgs='lolcat'
+if ! dpkg -s $pkgs >/dev/null 2>&1; then
+ Installed_Lolcat='false'
+ else
+ Installed_Lolcat='true'
+fi
+
+#######################################
+sudo sed "4s/.*/Installed_Figlet=${Installed_Figlet}/" ./files/1global_variables > ./files/1global_variables_temp #set Wireguard installed variable
+sudo cp ./files/1global_variables_temp ./files/1global_variables
+
+sudo sed "5s/.*/Installed_Ruby=${Installed_Ruby}/" ./files/1global_variables > ./files/1global_variables_temp #set Kernel-headers installed variable
+sudo cp ./files/1global_variables_temp ./files/1global_variables
+
+sudo sed "6s/.*/Installed_Lolcat=${Installed_Lolcat}/" ./files/1global_variables > ./files/1global_variables_temp #set libs installed variable
+sudo cp ./files/1global_variables_temp ./files/1global_variables
+
+sudo rm ./files/1global_variables_temp
+
+############### /Functions ##################################
