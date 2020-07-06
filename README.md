@@ -20,10 +20,10 @@ Bash-Promt Example:
 **Usage:**
 
 ```bash
-$ git clone https://github.com/twerpyfie/Custom-RockPi-setup.git
-$ cd Custom-RockPi-setup
-$ sudo chmod +x ./Setup
-$ sudo bash ./Setup
+ https://github.com/twerpyfie/CustomRP.git
+ cd Custom-RockPi-setup
+ sudo chmod +x ./Setup
+ sudo bash ./Setup
 ```
 
 ### To do:
