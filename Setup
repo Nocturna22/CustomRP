@@ -89,6 +89,30 @@ done
 #xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 
+########## Install PiHole?
+while true
+do
+	echo -e "\e[48;5;57m Do you want to install PiHole?\e[48;5;235m[Y/n]\e[0m"
+	read -r -p  " The script will be downloaded from https://install.pi-hole.net" input
+	case $input in
+     [yY][eE][sS]|[yY])
+	#sudo bash ./scripts/3_install_pihole
+	 	
+	curl -sSL https://install.pi-hole.net | bash
+
+ break
+	;;
+     [nN][oO]|[nN])
+echo " Not installed..."
+ break
+    ;;
+     *)
+ echo " Invalid input..."
+	;;
+ esac
+done
+#xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
 
 
 
