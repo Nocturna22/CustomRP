@@ -57,7 +57,7 @@ $white       |_______Load: $green$LOAD1$white (1m), $green$LOAD5$white (5m), $gr
 ########## /Print Systeminformation
 
 ########### Print Memorybar ############
-echo "                                                           Temperatur muss auch noch iwo rein"
+echo "                                                           #Temperatur muss auch noch iwo rein"
 printf "      Memory usage:\n"
     used_width=$((($usage*$bar_width)/100))
     # color is purple if usage < max_usage, else red
@@ -81,7 +81,7 @@ printf "      Memory usage:\n"
 	info="/ ${usage}% $TOTAL"
     echo "     |${info:1}" | awk '{ printf("%-35s%+3s used out of %+4s\n", $1, $2, $3); }' | sed -e 's/^/  /'
     echo -e "${bar}" | sed -e 's/^/  /'
-	echo ""
+    echo ""
 ########### /Print Memorybar ###########
 
 ########### Print Storagebar ############
@@ -112,5 +112,5 @@ for line in "${dfs[@]}"; do
     echo "     |${line:1}" | awk '{ printf("%-36s%+3s used out of %+4s\n", $1, $2, $3); }' | sed -e 's/^/  /'
     echo -e "${bar}" | sed -e 's/^/  /'
 done
-echo ""
+    echo ""
 ########### /Print StorageBar ###########
