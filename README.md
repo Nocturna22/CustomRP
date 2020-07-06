@@ -5,11 +5,10 @@ With this simple setup it is possible to customize a new installation of DietPi 
 
 ### What is possible so far:
 
-- Wireguard installation on a RockPi with DietPi
 - Change the Bashpromt
 - Change MOTD for DietPi
-
-
+- Wireguard installation on a RockPi with DietPi
+- PiHole installation (Simple)
 
 
 
@@ -31,7 +30,6 @@ $ sudo bash ./Setup
 
 - Include wireguard configurator
 - Include wireguard QR-Code generator for Peers
-- Include Pihole installation
 - Maby make some new Repositorys for the other Projects included
 - Maby make for every underproject an single file that will be executed
 - Maby make an updater
