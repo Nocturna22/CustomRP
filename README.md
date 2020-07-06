@@ -31,5 +31,4 @@ $ sudo bash ./Setup
 - Include wireguard configurator
 - Include wireguard QR-Code generator for Peers
 - Maby make some new Repositorys for the other Projects included
-- Maby make for every underproject an single file that will be executed
 - Maby make an updater
