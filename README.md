@@ -5,15 +5,15 @@ With this simple setup it is possible to customize a new installation of DietPi 
 
 ### What is possible so far:
 
-- Change the Bashpromt
+- Change the Bash-Promt
 - Change MOTD for DietPi
 - Wireguard installation on a RockPi with DietPi
 - PiHole installation (Simple)
 
 
 
-Example:
-![BashPromt example](https://raw.githubusercontent.com/twerpyfie/Custom-RockPi-setup/master/files/Bashpromt.PNG?raw=true "BashPromt")
+Bash-Promt Example:
+![Bash-Promt example](https://raw.githubusercontent.com/twerpyfie/Custom-RockPi-setup/master/files/Bashpromt.PNG?raw=true "Bash-Promt")
 
 
 
