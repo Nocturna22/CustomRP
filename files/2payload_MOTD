@@ -1,8 +1,46 @@
 #!/bin/bash
 
+clear
+
 ########## Variables ##########
+
+#UptimeVars
 UPTIMEcut="$(uptime -p)"
 UPTIMEcut=${UPTIMEcut/#*up}
+#/UptimeVars
+
+#Colors and Fontstuff
+white="\e[0m"
+green="\e[38;5;85m"
+grey="\e[38;5;235m"
+purple="\e[38;5;57m"
+red="\e[1;38;5;160m"
+dim="\e[2m"
+undim="\e[0m"
+#/Colors and Fontstuff
+
+#ProcessVars
+PROCESS=`ps -eo user=|sort|uniq -c | awk '{ print $2 " " $1 }'`
+PROCESS_ALL=`echo "$PROCESS"| awk {'print $2'} | awk '{ SUM += $1} END { print SUM }'`
+PROCESS_ROOT=`echo "$PROCESS"| grep root | awk {'print $2'}`
+PROCESS_USER=`echo "$PROCESS"| grep -v root | awk {'print $2'} | awk '{ SUM += $1} END { print SUM }'`
+#/ProcessVars
+
+#LoadVars
+IFS=" " read LOAD1 LOAD5 LOAD15 <<<$(cat /proc/loadavg | awk '{ print $1,$2,$3 }')
+#/LoadVars
+
+#MemoryVars
+IFS=" " read USED FREE TOTAL <<<$(free -htm | grep "Mem" | awk {'print $3,$4,$2'})
+#/MemoryVars
+
+# Storage and MemBar Vars
+max_usage=90
+bar_width=46
+usage=$(free | grep Mem | awk '{print $3/$2 * 100.0}' | awk '{printf("%d\n",$0+=$0<0?-0.5:0.5)}')
+mapfile -t dfs < <(df -H -x zfs -x squashfs -x tmpfs -x devtmpfs -x overlay --output=target,pcent,size | tail -n+2)
+# /Storage and MemBar Vars
+
 ########## /Variables #########
 
 ########## Print Header #######
@@ -10,66 +48,61 @@ figlet "       $(hostname)" | lolcat -f -a -s 90 -p 2 -S 1
 echo "       is now up for$UPTIMEcut" | lolcat -f -a -s 50 -p 2 -S 10
 ########## /Print Header ######
 
-
-# get load averages
-IFS=" " read LOAD1 LOAD5 LOAD15 <<<$(cat /proc/loadavg | awk '{ print $1,$2,$3 }')
-# get free memory
-IFS=" " read USED FREE TOTAL <<<$(free -htm | grep "Mem" | awk {'print $3,$4,$2'})
-# get processes
-PROCESS=`ps -eo user=|sort|uniq -c | awk '{ print $2 " " $1 }'`
-PROCESS_ALL=`echo "$PROCESS"| awk {'print $2'} | awk '{ SUM += $1} END { print SUM }'`
-PROCESS_ROOT=`echo "$PROCESS"| grep root | awk {'print $2'}`
-PROCESS_USER=`echo "$PROCESS"| grep -v root | awk {'print $2'} | awk '{ SUM += $1} END { print SUM }'`
-
-W="\e[0m"
-G="\e[38;5;85m"
-
+########## Print Systeminformation
 echo -e "
-${W}      System information:
-$W       |__Processes: $G$PROCESS_ROOT$W (root), $G$PROCESS_USER$W (user), $G$PROCESS_ALL$W (total)
-$W       |_____Memory: $G$USED$W used, $G$FREE$W free, $G$TOTAL$W total$W
-$W       |_______Load: $G$LOAD1$W (1m), $G$LOAD5$W (5m), $G$LOAD15$W (15m)"
+${white}      Systeminformation:
+$white       |__Processes: $green$PROCESS_ROOT$white (root), $green$PROCESS_USER$white (user), $green$PROCESS_ALL$white (total)
+$white       |_____Memory: $green$USED$white used, $green$FREE$white free, $green$TOTAL$white total$white
+$white       |_______Load: $green$LOAD1$white (1m), $green$LOAD5$white (5m), $green$LOAD15$white (15m)"
+########## /Print Systeminformation
 
-
-
-
-
-
-
-
-
-###########################
-# config
-max_usage=90
-bar_width=46
-# colors
-white="\e[38;5;235m"
-green="\e[38;5;57m"
-red="\e[1;38;5;160m"
-dim="\e[2m"
-undim="\e[0m"
-
-# disk usage: ignore zfs, squashfs & tmpfs
-mapfile -t dfs < <(df -H -x zfs -x squashfs -x tmpfs -x devtmpfs -x overlay --output=target,pcent,size | tail -n+2)
-
-printf "\n      disk usage:\n"
-for line in "${dfs[@]}"; do
-    # get disk usage
-    usage=$(echo "$line" | awk '{print $2}' | sed 's/%//')
+########### Print Memorybar ############
+echo "                                                           Temperatur muss auch noch iwo rein"
+printf "      Memory usage:\n"
     used_width=$((($usage*$bar_width)/100))
-    # color is green if usage < max_usage, else red
+    # color is purple if usage < max_usage, else red
     if [ "${usage}" -ge "${max_usage}" ]; then
         color=$red
     else
-        color=$green
+        color=$purple
     fi
-    # print green/red bar until used_width
+    # print purple/red bar until used_width
     bar="     ${color}"
     for ((i=0; i<$used_width; i++)); do
         bar+="█"
     done
     # print dimmmed bar until end
-    bar+="${white}${dim}"
+    bar+="${grey}${dim}"
+    for ((i=$used_width; i<$bar_width; i++)); do
+        bar+="▄"
+    done
+    bar+="${undim}"
+    # print usage line & bar
+	info="/ ${usage}% $TOTAL"
+    echo "     |${info:1}" | awk '{ printf("%-35s%+3s used out of %+4s\n", $1, $2, $3); }' | sed -e 's/^/  /'
+    echo -e "${bar}" | sed -e 's/^/  /'
+	echo ""
+########### /Print Memorybar ###########
+
+########### Print Storagebar ############
+printf "      disk usage:\n"
+for line in "${dfs[@]}"; do
+    # get disk usage
+    usage=$(echo "$line" | awk '{print $2}' | sed 's/%//')
+    used_width=$((($usage*$bar_width)/100))
+    # color is purple if usage < max_usage, else red
+    if [ "${usage}" -ge "${max_usage}" ]; then
+        color=$red
+    else
+        color=$purple
+    fi
+    # print purple/red bar until used_width
+    bar="     ${color}"
+    for ((i=0; i<$used_width; i++)); do
+        bar+="█"
+    done
+    # print dimmmed bar until end
+    bar+="${grey}${dim}"
     for ((i=$used_width; i<$bar_width; i++)); do
         bar+="▄"
     done
@@ -79,3 +112,5 @@ for line in "${dfs[@]}"; do
     echo "     |${line:1}" | awk '{ printf("%-36s%+3s used out of %+4s\n", $1, $2, $3); }' | sed -e 's/^/  /'
     echo -e "${bar}" | sed -e 's/^/  /'
 done
+echo ""
+########### /Print StorageBar ###########
