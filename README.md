@@ -20,7 +20,7 @@ Bash-Promt Example:
 **Usage:**
 
 ```bash
- $ https://github.com/twerpyfie/CustomRP.git
+ $  git clone https://github.com/twerpyfie/CustomRP.git
  $ cd Custom-RockPi-setup
  $ sudo chmod +x ./Setup
  $ sudo bash ./Setup
