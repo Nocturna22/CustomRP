@@ -96,8 +96,7 @@ do
 	read -r -p  " The script will be downloaded from https://install.pi-hole.net" input
 	case $input in
      [yY][eE][sS]|[yY])
-	#sudo bash ./scripts/3_install_pihole
-	 	
+ 	
 	curl -sSL https://install.pi-hole.net | bash
 
  break
