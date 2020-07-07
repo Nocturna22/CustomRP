@@ -1,0 +1,12 @@
+#!/bin/bash
+
+
+
+######## Variables
+wgconf_exist='none'
+#xxxxxxx /Variables
+
+######## Check if wireguard is installed
+pkgs='wireguard'
+if ! dpkg -s $pkgs >/dev/null 2>&1; then
+######## Install wireguard if not installed
