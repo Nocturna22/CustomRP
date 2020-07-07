@@ -57,3 +57,9 @@ fi
 
 #when ipv4 stuff is done Generate private and public keys for server and client1 and configure the,server,network,interface whatever: /etc/wireguard/wg0.conf
 #https://github.com/adrianmihalko/raspberrypiwireguard
+
+#this is what i want:
+#files:
+#1 wg-add-peer  -,_ Maby a peermanager?
+#2 wg-show-peer -'
+#3 wg-network-manager
