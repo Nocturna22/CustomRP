@@ -10,3 +10,19 @@ wgconf_exist='none'
 pkgs='wireguard'
 if ! dpkg -s $pkgs >/dev/null 2>&1; then
 ######## Install wireguard if not installed
+ echo -e "\e[48;5;57m Wireguard is not installed. Do you want to install it?\e[48;5;235m[Y/n]\e[0m"
+ read -r -p  " The installation script will be downloaded and executed." input
+   case $input in
+     [yY][eE][sS]|[yY])
+	  echo -e "\e[0m Installing..."
+      curl https://raw.githubusercontent.com/twerpyfie/CustomRP/master/scripts/1_install_wireguard | bash
+      ;;
+     [nN][oO]|[nN])
+      echo " Not installed..."
+	  ;;
+      *)
+	 echo " Invalid input..."
+	 ;;
+   esac
+fi
+#xxxxxxx /Check if wireguard is installed
