@@ -42,3 +42,18 @@ if [ '${wgconf_exist}'>='${count}' ];then
 echo wgconf exists
 echo $wgconf_exist
 fi
+#check for files like wg0.conf in /etc/wireguard/
+#i think wg*.conf
+#when wg*.conf is there, list all networks and ask if you want to create a new or what else you can do with the configs 
+#xxxxxxx /Check if wg config exists
+
+#when config/network has to be created: check if ipv4 is enabled
+# check if ipv4 is enabled 
+# sysctl net.ipv4.ip_forward 
+# if not, set it 
+# perl -pi -e 's/#{1,}?net.ipv4.ip_forward ?= ?(0|1)/net.ipv4.ip_forward = 1/g' /etc/sysctl.conf 
+# check if ipv4 is enabled, if not, the user has to make it manually
+# reboot, or search for other soution to renew the sysctl.conf by running system
+
+#when ipv4 stuff is done Generate private and public keys for server and client1 and configure the,server,network,interface whatever: /etc/wireguard/wg0.conf
+#https://github.com/adrianmihalko/raspberrypiwireguard
