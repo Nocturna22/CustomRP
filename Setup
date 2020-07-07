@@ -28,7 +28,7 @@ do
      [yY][eE][sS]|[yY])
 	echo -e "\e[0m Installing..."
 	sudo cat ./files/2payload_bashrc >> $HOME/.bashrc
-	echo -e " The changes are visible after a reboot. Or after this command: \e[48;5;57msource ~/.bashrc\e[0m"
+	echo -e " The changes are visible after reconnecting to terminal. Or after this command: \e[48;5;57msource ~/.bashrc\e[0m"
 	echo
  break
 	;;
