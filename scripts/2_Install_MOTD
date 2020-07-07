@@ -33,7 +33,6 @@ Installed_lolcat='none'
 
 
 #################### Install  MOTD #####################
-
 FILE=/boot/dietpi/func/dietpi-banner
 if test -f "$FILE"; then
     sudo cp /boot/dietpi/func/dietpi-banner /boot/dietpi/func/BACKUP_dietpi-banner
@@ -41,8 +40,6 @@ if test -f "$FILE"; then
 else
 	echo "I can currently only change the MOTD from a dietpi installation. But this will change later."
 fi
-
-
 #################### /Install  MOTD ####################
 
 
