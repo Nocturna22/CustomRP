@@ -26,3 +26,19 @@ if ! dpkg -s $pkgs >/dev/null 2>&1; then
    esac
 fi
 #xxxxxxx /Check if wireguard is installed
+######## Check if wg config/s (a wireguard network) exists
+
+cd /etc/wireguard/
+ext=conf
+wgconf_exist=0
+for i in *; do
+    if [ "${i}" != "${i%.${ext}}" ];then
+        ((++wgconf_exist))
+    fi
+done
+
+count=1
+if [ '${wgconf_exist}'>='${count}' ];then
+echo wgconf exists
+echo $wgconf_exist
+fi
