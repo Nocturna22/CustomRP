@@ -17,7 +17,7 @@ Installed_lolcat='none'
 	echo -e "\e[48;5;57m Installing Ruby...\e[0m"
 	sudo apt-get -y install ruby
 	echo -e "\e[48;5;57m Downloading Lolcat...\e[0m"
-	sudo wget https://github.com/busyloop/lolcat/archive/master.zip --create-dirs -O ./temp/master.zip
+	sudo curl -L https://github.com/busyloop/lolcat/archive/master.zip > ./temp/master.zip
 	echo -e "\e[48;5;57m Unzipping Lolcat...\e[0m"
 	(cd ./temp/ && sudo unzip -a ./master.zip)
 	echo -e "\e[48;5;57m Installing Lolcat...\e[0m"
