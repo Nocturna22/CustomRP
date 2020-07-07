@@ -45,7 +45,6 @@ fi
 
 
 #################### Functions ##############################
-
 ####### Check if figlet
 pkgs='figlet'
 if ! dpkg -s $pkgs >/dev/null 2>&1; then
@@ -73,15 +72,14 @@ if ! dpkg -s $pkgs >/dev/null 2>&1; then
 fi
 
 #######################################
-sudo sed "4s/.*/Installed_Figlet=${Installed_Figlet}/" ./files/1global_variables > ./files/1global_variables_temp #set Wireguard installed variable
-sudo cp ./files/1global_variables_temp ./files/1global_variables
+#sudo sed "4s/.*/Installed_Figlet=${Installed_Figlet}/" ./files/1global_variables > ./files/1global_variables_temp #set Wireguard installed variable
+#sudo cp ./files/1global_variables_temp ./files/1global_variables
 
-sudo sed "5s/.*/Installed_Ruby=${Installed_Ruby}/" ./files/1global_variables > ./files/1global_variables_temp #set Kernel-headers installed variable
-sudo cp ./files/1global_variables_temp ./files/1global_variables
+#sudo sed "5s/.*/Installed_Ruby=${Installed_Ruby}/" ./files/1global_variables > ./files/1global_variables_temp #set Kernel-headers installed variable
+#sudo cp ./files/1global_variables_temp ./files/1global_variables
 
-sudo sed "6s/.*/Installed_Lolcat=${Installed_Lolcat}/" ./files/1global_variables > ./files/1global_variables_temp #set libs installed variable
-sudo cp ./files/1global_variables_temp ./files/1global_variables
+#sudo sed "6s/.*/Installed_Lolcat=${Installed_Lolcat}/" ./files/1global_variables > ./files/1global_variables_temp #set libs installed variable
+#sudo cp ./files/1global_variables_temp ./files/1global_variables
 
-sudo rm ./files/1global_variables_temp
-
+#sudo rm ./files/1global_variables_temp
 ############### /Functions ##################################
