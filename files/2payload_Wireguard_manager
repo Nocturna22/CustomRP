@@ -42,10 +42,14 @@ if [ '${wgconf_exist}'>='${count}' ];then
 echo wgconf exists
 echo $wgconf_exist
 fi
+
+
+
 #check for files like wg0.conf in /etc/wireguard/
 #i think wg*.conf
 #when wg*.conf is there, list all networks and ask if you want to create a new or what else you can do with the configs 
 #xxxxxxx /Check if wg config exists
+
 
 #when config/network has to be created: check if ipv4 is enabled
 # check if ipv4 is enabled 
