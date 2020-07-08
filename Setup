@@ -3,7 +3,7 @@
 ################### VARIABLES ######################
 USER=$(whoami)
 #xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+sudo -i
 clear
 	echo -e "\e[38;5;4m                        |                              _ \                   |       _ \   _)   |  |"
 	echo -e "\e[38;5;25m   __|   |   |    __|   __|    _ \    __ '__ \        |   |    _ \     __|   |  /   |   |   |   |  |"
