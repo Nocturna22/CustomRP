@@ -37,9 +37,16 @@ FILE=/boot/dietpi/func/dietpi-banner
 if test -f "$FILE"; then
     sudo cp /boot/dietpi/func/dietpi-banner /boot/dietpi/func/BACKUP_dietpi-banner
 	cp ./files/2payload_MOTD /boot/dietpi/func/dietpi-banner
-else
-	echo "I can currently only change the MOTD from a dietpi installation. But this will change later."
 fi
+
+FILE=/etc/motd
+if test -f "$FILE"; then
+    sudo cp /etc/motd /etc/BACKUP_motd
+	sudo cp ./files/2payload_MOTD /etc/motd
+fi
+
+
+
 #################### /Install  MOTD ####################
 
 
