@@ -27,7 +27,7 @@ else
         echo -e "\e[48;5;160m Something went wrong with the Kernel-headers! Please check it.                   \e[0m"
         echo -e "\e[48;5;160m Your installed Kernel is ${KERNELVERSION} but this installer is for the Rockchip64        \e[0m"
         echo -e "\e[48;5;160m This script was made 02.07.2020. If you have an RockPi4 and this does not work-  \e[0m"
-        echo -e "\e[48;5;160m maby this installer is to old..                                                  \e[0m"
+        echo -e "\e[48;5;160m maby this installer is too old..                                                  \e[0m"
 fi
 #################### /Install Wireguard #####################
 
