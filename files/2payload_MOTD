@@ -26,6 +26,29 @@ PROCESS_ROOT=`echo "$PROCESS"| grep root | awk {'print $2'}`
 PROCESS_USER=`echo "$PROCESS"| grep -v root | awk {'print $2'} | awk '{ SUM += $1} END { print SUM }'`
 #/ProcessVars
 
+#Updatevars
+. /boot/dietpi/func/dietpi-globals
+ DIETPI_VERSION="$G_DIETPI_VERSION_CORE.$G_DIETPI_VERSION_SUB.$G_DIETPI_VERSION_RC"
+#/Updatevars
+
+#Functions
+# DietPi update available?
+AVAILABLE_UPDATE= # -1 = image required, other value = latest version
+Check_DietPi_Update(){
+     [[ -f '/run/dietpi/.update_available' ]] || return 1
+     AVAILABLE_UPDATE=$(</run/dietpi/.update_available)
+     return 0
+}
+
+# APT updates available?
+PACKAGE_COUNT=0
+     Check_APT_Updates(){
+     [[ -f '/run/dietpi/.apt_updates' ]] || return 1
+     PACKAGE_COUNT=$(</run/dietpi/.apt_updates)
+     return 0
+}
+#/Functions
+
 #TempVars
 TEMP_CPU=$(</sys/class/thermal/thermal_zone0/temp) #CPU
 TEMP_GPU=$(</sys/class/thermal/thermal_zone1/temp) #GPU
@@ -51,6 +74,19 @@ mapfile -t dfs < <(df -H -x zfs -x squashfs -x tmpfs -x devtmpfs -x overlay --ou
 ########## Print Header #######
 figlet "       $(hostname)" | lolcat -f -a -s 90 -p 2 -S 1
 echo "       is now up for$UPTIMEcut" | lolcat -f -a -s 50 -p 2 -S 10
+
+
+# DietPi update available?
+if [[ $AVAILABLE_UPDATE ]]; then
+
+        echo -e " $greendietpi-update    Run now to update DietPi from v$white$DIETPI_VERSION $greento v$white$AVAILABLE_UPDATE."
+# APT updates available?
+elif (( $PACKAGE_COUNT )); then
+
+        echo -e " $greenapt upgrade Run now to apply $white$PACKAGE_COUNT $greenavailable APT package upgrades."
+fi
+
+
 ########## /Print Header ######
 
 ########## Print Systeminformation
